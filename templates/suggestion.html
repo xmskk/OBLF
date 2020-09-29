@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block main %}
+    <div>
+    {% for role in suggestion1 %}
+        <span class="card" style="width: 14rem; margin: 1rem auto;">
+            <div class="card-header"><img src="static/{{ role }}.png" width="30 rem" style="vertical-align: middle;">  {{ role }}</div>
+            <ul class="list-group list-group-flush">
+                {% if not suggestion1[role] %}
+                    <li class="list-group-item">Not enough game data!</li>
+                {% endif %}
+                {% for champ in suggestion1[role] %}
+                    <li class="list-group-item"><img src='http://ddragon.leagueoflegends.com/cdn/{{ version }}/img/champion/{{ champnames[champ] }}.png' width="30 rem" style="border-radius: 50%;">  {{ champ }}</li>
+                {% endfor %}
+            </ul>
+        </span>
+    {% endfor %}  
+    </div>  
+
+    <div class="card" style="width: 14rem; margin: 1rem auto;">
+        <div class="card-header">
+            <img src="static/MAP.png" width="30 rem" style="vertical-align: middle;">  Non lane specific
+        </div>
+        <ul class="list-group list-group-flush">
+            {% if not suggestion2 %}
+                <li class="list-group-item">Not enough game data!</li>
+            {% endif %}
+            {% for champ in suggestion2 %}
+                <li class="list-group-item"><img src='http://ddragon.leagueoflegends.com/cdn/10.19.1/img/champion/{{ champnames[champ] }}.png' width="30 rem" style="border-radius: 50%;">  {{ champ }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <button class="btn btn-primary" onclick="location.href='/'">Back to initial page</button>
+{% endblock %}

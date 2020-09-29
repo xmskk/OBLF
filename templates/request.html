@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+
+{% block script %}
+    <script>
+        window.onload=function()
+        {
+            function validateInputs(){
+                if(document.getElementById("region").options[document.getElementById("region").selectedIndex].value=="" || document.getElementById("summonername").value.length==0 || document.getElementById("max_game").value.length==0)
+                {
+                    document.getElementById("submit-button").disabled=true;
+                }
+                else
+                {
+                    document.getElementById("submit-button").disabled=false;
+                }
+            }
+
+            document.getElementById("region").onchange=function(event)
+            {
+                validateInputs();
+            }
+            
+            document.getElementById("summonername").onkeyup=function(event)
+            {
+                validateInputs();
+            }
+
+            document.getElementById("max_game").onkeyup=function(event)
+            {
+                validateInputs();
+            }
+        }
+    </script>
+{% endblock %}
+
+{% block main %}
+    <h1 style="font-family: 'Unica One'; margin-bottom: 2rem;">Store Data</h1>
+
+    <form action="/request" method="post">
+        <div class="form-group">
+            <input autofocus class="form-control" name="summonername" id="summonername" placeholder="Summoner Name" type="text" style="width: 12rem;">
+        </div>
+        <select name="region" id="region" class="form-group form-control" style="width: 12rem;">
+            <option value="">Region</option>
+            {% for region in regions %}
+                <option value="{{ regions[region] }}">{{ region }}</option>
+            {% endfor %}
+        </select>
+        <div class="form-group">
+            <input autocomplete="off" class="form-control" name="max_game" id="max_game" placeholder="Number of Games" type="number" min="1" style="width: 12rem;">
+        </div>
+        <button class="btn btn-primary" type="submit" id="submit-button" name="submit-button" disabled>Submit</button>
+    </form>
+
+    <p style="display: inline-block; width: auto; text-align: left; max-width: 40rem; margin-top: 1rem;">
+    <span style="padding-left: 1.5rem">Input your summoner name, region, and the number of games that you would like to search.</span><br><br><span style="padding-left: 1.5rem">The bigger number of games will mean more accurate reuslts, but also a lot longer search time due to Riot Games restriction on API request per minute. However, once you perform a search with a certain amount of games, that data will be stored and won't slow down the process next time.</span><br><br><span style="padding-left: 1.5rem">The table below displays the data already stored.</span>
+    </p>
+
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col">Summoner Name</th>
+            <th scope="col">Region</th>
+            <th scope="col">#Games Stored</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for table in tables %}
+            <tr>
+                <th scope="row">{{ table[0] }}</th>
+                <th>{{ table[1] }}</th>
+                <th>{{ table[2] }}</th>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

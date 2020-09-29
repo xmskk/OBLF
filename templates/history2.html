@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block main %}
+    <h1 style="font-family: 'Unica One'; margin-bottom: 2rem;">Match History</h1>
+    {% for game in games %}
+    <table class="table table-striped" style="max-width: 30rem; margin-left: auto; margin-right: auto; margin-bottom: 2rem; table-layout: fixed;">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="text-align: left;">Team 1</th>
+            <th scope="col" style="width: 3rem; text-align: center;">VS</th>
+            <th scope="col" style="text-align: right;">Team 2</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in range(5) %}
+            <tr>
+                {% if game[i][3] == 1 %}
+                <th class="bg-primary" scope="row" style="text-align: left; overflow: hidden;"><img src='http://ddragon.leagueoflegends.com/cdn/{{ version }}/img/champion/{{ champnames[champlist[game[i][1]|string]] }}.png' width="30 rem" style="border-radius: 50%;">  {{ champlist[game[i][1]|string] }}<br>{{ game[i][4] }}</th>
+                <th></th>
+                <th class="bg-danger" style="text-align: right; overflow: hidden;">{{ champlist[game[i+5][1]|string] }}  <img src='http://ddragon.leagueoflegends.com/cdn/{{ version }}/img/champion/{{ champnames[champlist[game[i+5][1]|string]] }}.png' width="30 rem" style="border-radius: 50%;"><br>{{ game[i+5][4] }}</th>
+                {% else %}
+                <th class="bg-danger" scope="row" style="text-align: left; overflow: hidden;"><img src='http://ddragon.leagueoflegends.com/cdn/{{ version }}/img/champion/{{ champnames[champlist[game[i][1]|string]] }}.png' width="30 rem" style="border-radius: 50%;">  {{ champlist[game[i][1]|string] }}<br>{{ game[i][4] }}</th>
+                <th></th>
+                <th class="bg-primary" style="text-align: right; overflow: hidden;">{{ champlist[game[i+5][1]|string] }}  <img src='http://ddragon.leagueoflegends.com/cdn/{{ version }}/img/champion/{{ champnames[champlist[game[i+5][1]|string]] }}.png' width="30 rem" style="border-radius: 50%;"><br>{{ game[i+5][4] }}</th>                
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endfor %}
+    <button class="btn btn-primary" onclick="location.href='/'">Back to initial page</button>
+{% endblock %}

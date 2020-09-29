@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block script %}
+<script>
+    window.onload=function()
+    {
+        function validateInputs(){
+            if(document.getElementById("region").options[document.getElementById("region").selectedIndex].value=="" || document.getElementById("summonername").value.length==0)
+            {
+                document.getElementById("submit-button").disabled=true;
+            }
+            else
+            {
+                document.getElementById("submit-button").disabled=false;
+            }
+        }
+
+        document.getElementById("region").onchange=function(event)
+        {
+            validateInputs();
+        }
+        
+        document.getElementById("summonername").onkeyup=function(event)
+        {
+            validateInputs();
+        }
+    }
+</script>
+{% endblock %}
+
+{% block main %}
+    <h1 style="font-family: 'Unica One'; margin-bottom: 2rem;">Ban Suggestions</h1>
+
+    <form action="/ban" method="post">
+        <div class="form-group">
+            <input autofocus class="form-control" name="summonername" id="summonername" placeholder="Summoner Name" type="text" style="width: 12rem;">
+        </div>
+        <select name="region" id="region" class="form-group form-control" style="width: 12rem;">
+            <option value="">Region</option>
+            {% for region in regions %}
+                <option value="{{ regions[region] }}">{{ region }}</option>
+            {% endfor %}
+        </select>
+        <div>
+        <button class="btn btn-primary" type="submit" id="submit-button" name="submit-button" disabled>Submit</button>
+        </div>
+    </form>
+
+    <p style="display: inline-block; width: auto; text-align: left; max-width: 40rem; margin-top: 1rem;">
+    <span style="padding-left: 1.5rem">The results will show you the top 3 champions (in order) that you should consider banning per lane as well as the top 5 champions (in order) regardless of the lane you play.</span><br><br><span style="padding-left: 1.5rem">If you do not have enough data for a lane to make a meaningful output, it will print "Not enough game data!".</span>
+    </p>
+{% endblock %}

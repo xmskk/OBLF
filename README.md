@@ -4,6 +4,10 @@ For any questions or comments please contact: xmskk24@gmail.com
 
 --------------------------------------------------
 
+A demonstration of the code can be found at [this youtube video](https://youtu.be/-ShZGQoZaDI)
+
+--------------------------------------------------
+
 In order for this application to work, it requires a Riot Games API key.
 
 Please input your API key at app.py on line 12 if you want to use this application.
